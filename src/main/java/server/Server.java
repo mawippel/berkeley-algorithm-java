@@ -1,43 +1,37 @@
 package server;
 
+import static common.AppConstants.formatter;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+
+import common.AppConstants;
 
 /**
- * Server of the application.
- * Initializes 2 instances.
+ * Server of the application. Initializes 2 instances.
  * 
  * @author Marcelo Wippel
  */
 public class Server {
-    
-    public static final int PORTA_SERVIDOR_1 = 1234;
-    public static final int PORTA_SERVIDOR_2 = 12345;
 
-    /**
-     * Main
-     * @param args 
-     */
-    public static void main(String[] args) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            
-            // Servidor 1
-            HorarioServidor hs1 = new HorarioServidorImpl(sdf.parse("07:30:10"));
-            Registry registry1 = LocateRegistry.createRegistry(PORTA_SERVIDOR_1);
-            registry1.rebind("HorarioServidorImpl", hs1);
-            System.out.println("Servidor 1 iniciado...");
-            
-            // Servidor 2
-            HorarioServidor hs2 = new HorarioServidorImpl(sdf.parse("09:20:15"));
-            Registry registry2 = LocateRegistry.createRegistry(PORTA_SERVIDOR_2);
-            registry2.rebind("HorarioServidorImpl", hs2);
-            System.out.println("Servidor 2 iniciado...");
-            
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
+	public static void main(String[] args) {
+		try {
+			// Servidor 1
+			HorarioServidor hs1 = new HorarioServidorImpl(LocalTime.parse("10:24:30", formatter));
+			Registry registry1 = LocateRegistry.createRegistry(AppConstants.SERVER_PORT_1);
+			registry1.rebind(HorarioServidorImpl.class.getSimpleName(), hs1);
+			System.out.println(String.format("Servidor 1 iniciado na porta %s", AppConstants.SERVER_PORT_1));
+
+			// Servidor 2
+			HorarioServidor hs2 = new HorarioServidorImpl(LocalTime.parse("07:30:13", formatter));
+			Registry registry2 = LocateRegistry.createRegistry(AppConstants.SERVER_PORT_2);
+			registry2.rebind(HorarioServidorImpl.class.getSimpleName(), hs2);
+			System.out.println(String.format("Servidor 2 iniciado na porta %s", AppConstants.SERVER_PORT_2));
+
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+	}
 
 }

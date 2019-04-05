@@ -2,7 +2,7 @@ package server;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Date;
+import java.time.LocalTime;
 
 /**
  * Interface to the Client-Side access the methods
@@ -11,8 +11,8 @@ import java.util.Date;
  */
 public interface HorarioServidor extends Remote {
     
-    public Date getHorario() throws RemoteException;
+    public LocalTime getHorario() throws RemoteException;
     
-    public void setHorario(Date horario) throws RemoteException;
+    public void setHorario(LocalTime horario) throws RemoteException;
     
 }

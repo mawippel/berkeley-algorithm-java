@@ -2,8 +2,8 @@ package server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Implementation of {@link HorarioServidor}
@@ -13,21 +13,21 @@ public class HorarioServidorImpl extends UnicastRemoteObject implements HorarioS
 
 	private static final long serialVersionUID = -6810169856453308607L;
 	
-    private Date horario;
+    private LocalTime horario;
     
-    public HorarioServidorImpl(Date horario) throws RemoteException {
+    public HorarioServidorImpl(LocalTime horario) throws RemoteException {
         this.horario = horario;
     }
 
     @Override
-    public Date getHorario() throws RemoteException {
+    public LocalTime getHorario() throws RemoteException {
         return horario;
     }
 
     @Override
-    public void setHorario(Date horario) throws RemoteException {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        System.out.println("Horário atualizado: " + sdf.format(horario));
+    public void setHorario(LocalTime horario) throws RemoteException {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        System.out.println("Horário atualizado: " + dtf.format(horario));
         this.horario = horario;
     }
     
