@@ -61,6 +61,7 @@ public class MainClock {
 			// Atribuir Data Nova
 			hs1.setHorario(horarioNovo);
 			hs2.setHorario(horarioNovo);
+			hs3.setHorario(horarioNovo);
 			horarioLocal = horarioNovo;
 			System.out.println("Horários atualizados");
 
@@ -68,7 +69,7 @@ public class MainClock {
 			System.out.println("Horario Local: " + formatter.format(horarioLocal));
 			System.out.println("Horario Servidor 1: " + formatter.format(hs1.getHorario()));
 			System.out.println("Horario Servidor 2: " + formatter.format(hs2.getHorario()));
-			System.out.println("Horario Servidor 2: " + formatter.format(hs2.getHorario()));
+			System.out.println("Horario Servidor 3: " + formatter.format(hs3.getHorario()));
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
