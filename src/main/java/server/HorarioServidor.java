@@ -11,8 +11,8 @@ import java.time.LocalTime;
  */
 public interface HorarioServidor extends Remote {
     
-    public LocalTime getHorario() throws RemoteException;
+    LocalTime getHorario() throws RemoteException;
     
-    public void setHorario(LocalTime horario) throws RemoteException;
+    void setHorario(LocalTime horario) throws RemoteException;
     
 }
