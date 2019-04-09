@@ -22,50 +22,49 @@ public class MainClock {
 		try {
 			var times = new ArrayList<LocalTime>();
 
-			LocalTime horarioLocal = LocalTime.parse("06:04:05", AppConstants.formatter);
+			LocalTime horarioLocal = LocalTime.parse("07:00:00", AppConstants.formatter);
 			times.add(horarioLocal);
-			System.out.println("Horário Local: " + formatter.format(horarioLocal));
+			System.out.println("Horï¿½rio Local: " + formatter.format(horarioLocal));
 
-			// Conexão Servidor 1
+			// Conexï¿½o Servidor 1
 			Registry registry1 = LocateRegistry.getRegistry(AppConstants.SERVER_NAME_1, AppConstants.SERVER_PORT_1);
 			HorarioServidor hs1 = (HorarioServidor) registry1.lookup(HorarioServidorImpl.class.getSimpleName());
-			System.out.println("Conexão com Servidor 1 estabelecida com sucesso.");
+			System.out.println("Conexï¿½o com Servidor 1 estabelecida com sucesso.");
 			LocalTime horarioServidor1 = hs1.getHorario();
 			times.add(horarioServidor1);
-			System.out.println("Horário Servidor 1: " + formatter.format(horarioServidor1));
+			System.out.println("Horï¿½rio Servidor 1: " + formatter.format(horarioServidor1));
 
-			// Conexão Servidor 2
+			// Conexï¿½o Servidor 2
 			Registry registry2 = LocateRegistry.getRegistry(AppConstants.SERVER_NAME_2, AppConstants.SERVER_PORT_2);
 			HorarioServidor hs2 = (HorarioServidor) registry2.lookup(HorarioServidorImpl.class.getSimpleName());
-			System.out.println("Conexão com Servidor 2 estabelecida com sucesso.");
+			System.out.println("Conexï¿½o com Servidor 2 estabelecida com sucesso.");
 			LocalTime horarioServidor2 = hs2.getHorario();
 			times.add(horarioServidor2);
-			System.out.println("Horário Servidor 2: " + formatter.format(horarioServidor2));
+			System.out.println("Horï¿½rio Servidor 2: " + formatter.format(horarioServidor2));
 
-			// Conexão Servidor 3
+			// Conexï¿½o Servidor 3
 			Registry registry3 = LocateRegistry.getRegistry(AppConstants.SERVER_NAME_3, AppConstants.SERVER_PORT_3);
 			HorarioServidor hs3 = (HorarioServidor) registry3.lookup(HorarioServidorImpl.class.getSimpleName());
-			System.out.println("Conexão com Servidor 3 estabelecida com sucesso.");
+			System.out.println("Conexï¿½o com Servidor 3 estabelecida com sucesso.");
 			LocalTime horarioServidor3 = hs3.getHorario();
 			times.add(horarioServidor3);
-			System.out.println("Horário Servidor 3: " + formatter.format(horarioServidor3));
+			System.out.println("Horï¿½rio Servidor 3: " + formatter.format(horarioServidor3));
 
-			// Média (Berkeley)
-			long nanosSum = horarioLocal.toNanoOfDay();
-			for (LocalTime t : times) {
-				nanosSum += t.toNanoOfDay();
-			}
-			LocalTime horarioNovo = LocalTime.ofNanoOfDay(nanosSum / (times.size() + 1));
-			System.out.println("Média: " + formatter.format(horarioNovo));
+			var nanoLocal = horarioLocal.toNanoOfDay();
+			var diffSerber1 = horarioServidor1.toNanoOfDay() - nanoLocal;
+			var diffSerber2 = horarioServidor2.toNanoOfDay() - nanoLocal;
+			var diffSerber3 = horarioServidor3.toNanoOfDay() - nanoLocal;
+			var avgDiff = (diffSerber1 + diffSerber2 + diffSerber3) / 3; 
 
 			// Atribuir Data Nova
-			hs1.setHorario(horarioNovo);
-			hs2.setHorario(horarioNovo);
-			hs3.setHorario(horarioNovo);
-			horarioLocal = horarioNovo;
-			System.out.println("Horários atualizados");
+			hs1.ajustarHora(horarioLocal, avgDiff);
+			hs2.ajustarHora(horarioLocal, avgDiff);
+			hs3.ajustarHora(horarioLocal, avgDiff);
+			horarioLocal = horarioLocal.plusNanos(avgDiff);
+			//horarioLocal = horarioNovo;
+			System.out.println("Horï¿½rios atualizados");
 
-			// Verificar horario em todas as instâncias
+			// Verificar horario em todas as instï¿½ncias
 			System.out.println("Horario Local: " + formatter.format(horarioLocal));
 			System.out.println("Horario Servidor 1: " + formatter.format(hs1.getHorario()));
 			System.out.println("Horario Servidor 2: " + formatter.format(hs2.getHorario()));

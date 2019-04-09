@@ -13,7 +13,7 @@ public class Clock_Three {
 	public static void main(String[] args) {
 		try {
 			// Servidor 3
-			HorarioServidor hs3 = new HorarioServidorImpl(LocalTime.parse("05:07:15", formatter));
+			HorarioServidor hs3 = new HorarioServidorImpl(LocalTime.parse("07:15:00", formatter));
 			Registry registry3 = LocateRegistry.createRegistry(AppConstants.SERVER_PORT_3);
 			registry3.rebind(HorarioServidorImpl.class.getSimpleName(), hs3);
 			System.out.println(String.format("Servidor 3 iniciado na porta %s", AppConstants.SERVER_PORT_3));

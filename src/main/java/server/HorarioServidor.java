@@ -10,9 +10,8 @@ import java.time.LocalTime;
  * @author Marcelo Wippel
  */
 public interface HorarioServidor extends Remote {
-    
-    LocalTime getHorario() throws RemoteException;
-    
-    void setHorario(LocalTime horario) throws RemoteException;
-    
+
+	LocalTime getHorario() throws RemoteException;
+
+	void ajustarHora(LocalTime horaClient, long nanos) throws RemoteException;
 }
